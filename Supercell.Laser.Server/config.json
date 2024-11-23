@@ -1,0 +1,8 @@
+﻿{
+  "udp_host": "ssh.edgebrawl.online",
+  "udp_port": 9449,
+  "database_username": "EdgeTop",
+  "database_password": "EdgeTop",
+  "database_name": "SilenceBrawl",
+  "doubleTrophies": true
+}
