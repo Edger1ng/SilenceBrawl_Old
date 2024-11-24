@@ -15,6 +15,14 @@
     {
       "slot": 4,
       "game_modes": [ "AttackDefend", "BountyHunter", "RoboWars" ]
+    },
+    {
+      "slot": 5,
+      "game_modes": [ "AttackDefend", "BountyHunter", "RoboWars", "LaserBall", "BattleRoyale", "CoinRush" ]
+    },
+    {
+      "slot": 6,
+      "game_modes": [ "CoinRush", "BattleRoyale", "LaserBall", "BountyHunter"]
     }
   ]
 }

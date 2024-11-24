@@ -119,7 +119,8 @@
                 if (!location.Disabled && gameModes.Contains(location.GameMode))
                 {
                     Random random = new(); // Создаем новый генератор случайных чисел
-                    int selectedModifier = random.Next(1, 6); // Генерируем один модификатор от 1 до 5 для слота 1
+                    int selectedModifier = random.Next(1, 6);
+                    int selectedModifier2 = random.Next(1, 6);// Генерируем один модификатор от 1 до 5 для слота 1
 
                     EventData ev = null;
                     if (slot != 9)
@@ -130,7 +131,7 @@
                             EndTime = DateTime.Now.AddMinutes(REFRESH_MINUTES), // Устанавливаем время окончания события
                             LocationId = location.GetGlobalId(), // Устанавливаем идентификатор локации
                             Slot = slot, // Устанавливаем номер слота
-                            Modifiers = new int[] { selectedModifier }, // Устанавливаем выбранный модификатор
+                            Modifiers = new int[] { selectedModifier, selectedModifier2 }, // Устанавливаем выбранный модификатор
                         };
                     }
                     else
@@ -178,7 +179,7 @@
                             EndTime = DateTime.Now.AddMinutes(REFRESH_MINUTES), // Устанавливаем время окончания события
                             LocationId = locationa.GetGlobalId(), // Устанавливаем идентификатор локации
                             Slot = 5, // Устанавливаем номер слота
-                            Modifiers = new int[] { selectedModifier }, // Устанавливаем выбранные модификаторы
+                            Modifiers = new int[] { selectedModifier, selectedModifier2 }, // Устанавливаем выбранные модификаторы
                         };
 
                         // Записываем идентификатор второй локации в массив Locations

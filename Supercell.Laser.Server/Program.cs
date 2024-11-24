@@ -22,7 +22,7 @@
  / /_/ / /  / /_/ /| |/ |/ / /   ___/ / /_/ /_/ / /  (__  ) 
 /_____/_/   \__,_/ |__/|__/_/   /____/\__/\__,_/_/  /____/  
                                                             
-       " + "\n\n\n", Color.Fuchsia, Color.Cyan, 8);
+       " + "\n\n\n", Color.DarkGreen, Color.DarkBlue, 8);
 
             Logger.Init();
             Configuration.Instance = Configuration.LoadFromFile("config.json");
