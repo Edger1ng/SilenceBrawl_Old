@@ -1,16 +1,15 @@
 import logging
 import asyncio
-from datetime import datetime
 import aiohttp
 from aiogram import Bot, Dispatcher, executor, types
 
 # Конфигурация
-GITHUB_API_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
-GITHUB_TOKEN = "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"
-TELEGRAM_TOKEN = "8116511420:AAFovL61Zr9XJDitR8_07NpT2o16XXGr5tI"
-CHANNEL_ID = "-1002312196529"
-OWNER = "Edger1ng"
-REPO = "SilenceBrawl"
+GITHUB_API_URL = "https://api.github.com/repos/{owner}/{repo}"
+GITHUB_TOKEN = "your_github_token"
+TELEGRAM_TOKEN = "your_telegram_token"
+CHANNEL_ID = "@your_channel_username_or_id"
+OWNER = "your_github_username"
+REPO = "your_private_repo_name"
 
 # Логирование
 logging.basicConfig(level=logging.INFO)
@@ -45,6 +44,9 @@ async def get_branch_for_commit(commit_sha):
     return "Unknown branch"
 
 async def check_github_updates():
+    """
+    Проверяет новые коммиты в репозитории.
+    """
     global last_commit_sha
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
     commits_url = f"{GITHUB_API_URL.format(owner=OWNER, repo=REPO)}/commits"
@@ -66,27 +68,31 @@ async def check_github_updates():
             commit_author = latest_commit['commit']['author']['name']
             commit_date = latest_commit['commit']['author']['date']
 
+            # Проверяем, есть ли новый коммит
             if latest_sha != last_commit_sha:
                 last_commit_sha = latest_sha
                 branch_name = await get_branch_for_commit(latest_sha)
                 message = (
-                    f"💡 *Новое изменение в репозитории {REPO}!*\n\n"
-                    f"🖋 *Сообщение:* {commit_message}\n"
+                    f"💡 *Новое обновление в  {REPO}!*\n\n"
                     f"🌿 *Ветка:* {branch_name}\n"
+                    f"🖋 *Сообщение:* {commit_message}\n"
                     f"👤 *Автор:* Edger1ng\n"
                     f"🕒 *Дата:* {commit_date}\n\n"
-                    f"🔗 [View Commit(только доверенные люди)](https://github.com/{OWNER}/{REPO}/commit/{latest_sha})"
+                    f"🔗 [Я оставлю это здест](https://github.com/{OWNER}/{REPO}/commit/{latest_sha})"
                 )
                 await bot.send_message(CHANNEL_ID, message, parse_mode="Markdown")
                 logger.info("New commit notification sent!")
 
 async def periodic_task():
+    """
+    Запускает периодическую проверку.
+    """
     while True:
         try:
             await check_github_updates()
         except Exception as e:
             logger.error(f"Error in periodic_task: {e}")
-        await asyncio.sleep(60)  # 5 минут
+        await asyncio.sleep(300)  # 5 минут
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
