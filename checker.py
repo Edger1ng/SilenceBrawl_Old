@@ -48,11 +48,11 @@ async def check_github_updates():
             if latest_sha != last_commit_sha:
                 last_commit_sha = latest_sha
                 message = (
-                    f"💡 *New Commit in {REPO}!*\n\n"
-                    f"🖋 *Message:* {commit_message}\n"
-                    f"👤 *Author:* {commit_author}\n"
-                    f"🕒 *Date:* {commit_date}\n\n"
-                    f"🔗 [View Commit](https://github.com/{OWNER}/{REPO}/commit/{latest_sha})"
+                    f"💡 *Новое изменение в репозитории {REPO}!*\n\n"
+                    f"🖋 *Сообщение:* {commit_message}\n"
+                    f"👤 *Author:* Edger1ng\n"
+                    f"🕒 *Дата:* {commit_date}\n\n"
+                    f"🔗 [View Commit(только доверенные люди)](https://github.com/{OWNER}/{REPO}/commit/{latest_sha})"
                 )
                 await bot.send_message(CHANNEL_ID, message, parse_mode="Markdown")
                 logger.info("New commit notification sent!")
