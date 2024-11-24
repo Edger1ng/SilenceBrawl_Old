@@ -46,7 +46,7 @@ async def check_battles():
                                 message = f"Обнаружена подозрительная игра! {line.strip()}"
                                 await bot.send_message(chat_id=USER_ID, text=message)
                         else:
-                            if battle_time < 25:
+                            if battle_time < 30:
                                 message = f"Обнаружена подозрительная игра! {line.strip()}"
                                 await bot.send_message(chat_id=USER_ID, text=message)
                     except ValueError:
@@ -56,12 +56,12 @@ async def check_battles():
 async def periodic_check():
     while True:
         await check_battles()
-        await asyncio.sleep(20)  # Периодическая проверка каждые 20 секунд
+        await asyncio.sleep(60)  # Периодическая проверка каждые 20 секунд
 
 # Обработчик команды /start
 @dp.message_handler(Command('start'))
 async def start_handler(message: types.Message):
-    await message.reply("Привет! Я бот для отслеживания статистики. Ждите сообщений...")
+    await message.reply("Ты кто")
 
 # Подключение обработчика на старте
 async def on_startup(_):
