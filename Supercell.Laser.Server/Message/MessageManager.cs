@@ -2541,7 +2541,61 @@ namespace Supercell.Laser.Server.Message
                                 response.Entry.Message = $"Done!"; // /usecode [code] - use bonus code
                                 Connection.Send(response);
                                 break;
-                            case "addGems1":
+                    case "removevip":
+                        if (HomeMode.Avatar.AccountId != 2 && HomeMode.Avatar.AccountId != 1)
+                        {
+                            response.Entry.Message = $"You don\'t have right to use this command"; // Проверка прав
+                            Connection.Send(response);
+                            return;
+                        }
+                        if (cmd.Length != 2)
+                        {
+                            Console.WriteLine("Usage: /removevip [TAG]");
+                            return;
+                        }
+
+                        long qwid2 = LogicLongCodeGenerator.ToId(cmd[1]);
+                        Account targetAccount = Accounts.Load(qwid2);
+                        if (targetAccount == null)
+                        {
+                            Console.WriteLine("Fail: account not found!");
+                            return;
+                        }
+
+                        // Сбрасываем VIP-статус
+                        targetAccount.Home.PremiumEndTime = DateTime.MinValue; // Устанавливаем дату окончания VIP в прошлое
+                        targetAccount.Avatar.PremiumLevel = 0; // Убираем уровень VIP
+
+                        // Создаём уведомление о снятии VIP
+                        Notification notification = new Notification
+                        {
+                            Id = 89,
+                            DonationCount = 10,
+                            MessageEntry = $"<c3>Ваш VIP-статус был снят. Спасибо, что были с нами!</c>"
+                        };
+                        targetAccount.Home.NotificationFactory.Add(notification);
+
+                        // Отправляем уведомление через команду
+                        LogicAddNotificationCommand removeVipCommand = new()
+                        {
+                            Notification = notification
+                        };
+                        AvailableServerCommandMessage asm2 = new AvailableServerCommandMessage
+                        {
+                            Command = removeVipCommand
+                        };
+                        if (Sessions.IsSessionActive(qwid2))
+                        {
+                            var session = Sessions.GetSession(qwid2);
+                            session.GameListener.SendTCPMessage(asm2);
+                        }
+
+                        response.Entry.Message = $"VIP-статус успешно снят!"; // Подтверждение для админа
+                        Connection.Send(response);
+                        break;
+
+
+                    case "addGems1":
                                 if (HomeMode.Avatar.AccountId != 2 && HomeMode.Avatar.AccountId != 1)
                                 {
                                     response.Entry.Message = $"You don\'t have right to use this command"; // /usecode [code] - use bonus code
