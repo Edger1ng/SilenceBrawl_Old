@@ -4,12 +4,12 @@ import aiohttp
 from aiogram import Bot, Dispatcher, executor, types
 
 # Конфигурация
-GITHUB_API_URL = "https://api.github.com/repos/{owner}/{repo}"
-GITHUB_TOKEN = "your_github_token"
-TELEGRAM_TOKEN = "your_telegram_token"
-CHANNEL_ID = "@your_channel_username_or_id"
-OWNER = "your_github_username"
-REPO = "your_private_repo_name"
+GITHUB_API_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
+GITHUB_TOKEN = "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"
+TELEGRAM_TOKEN = "8116511420:AAFovL61Zr9XJDitR8_07NpT2o16XXGr5tI"
+CHANNEL_ID = "-1002312196529"
+OWNER = "Edger1ng"
+REPO = "SilenceBrawl"
 
 # Логирование
 logging.basicConfig(level=logging.INFO)
