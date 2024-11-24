@@ -2347,9 +2347,31 @@ namespace Supercell.Laser.Server.Message
                                     Connection.Send(response);
                                     return;
                                 }
-                                if (cmd.Length != 3 || !int.TryParse(cmd[2], out int donationAmount))
+
+                        // Проверка на наличие аргументов и корректности donationAmount и messageType
+                                if (cmd.Length != 4 || !int.TryParse(cmd[2], out int donationAmount) || !int.TryParse(cmd[3], out int messageType))
                                 {
-                                    Console.WriteLine("Usage: /gems [TAG] [DonationCount]");
+                                    Console.WriteLine("Usage: /gems [TAG] [DonationCount] [MessageType]");
+                                    return;
+                                }
+
+                        // Определяем сообщение в зависимости от messageType
+                                string messageEntry = messageType switch
+                                {
+                                    1 => $"<c6>Ваши {donationAmount} гемов, спасибо за поддержку сервера!</c>",
+                                    2 => $"<c5>Вы получили {donationAmount} гемов за </c><c2>Silence</c> Creators!",
+                                    3 => $"<c7>Вы получате компенсацию в размере {donationAmount} гемов!</c>",
+                                    4 => $"<c3>Вы получаете {donationAmount} гемов за победу в Клубных войнах!</c>",
+                                    5 => $"<c3>Вы получаете {donationAmount} гемов за победу в Конкурсе!</c>",
+                                    6 => $"<c7>Вы получаете {donationAmount} гемов за достижения в игре!</c>",
+                                    7 => $"<c3>Нови год к нам мчитса, скора всо случитса.Эти {donationAmount} гемов для вас!</c>",
+                                    8 => $"<c3>Победа в ивенте?ДА!Эти {donationAmount} гемов для вас!</c>",
+                                    _ => null // Недопустимый messageType
+                                };
+
+                                if (messageEntry == null)
+                                {
+                                    Console.WriteLine("Fail: Invalid message type! Use 1, 2, or 3.");
                                     return;
                                 }
 
@@ -2361,30 +2383,39 @@ namespace Supercell.Laser.Server.Message
                                     return;
                                 }
 
+                        // Создаём уведомление с заданным сообщением
                                 Notification nGems = new Notification
                                 {
                                     Id = 89,
                                     DonationCount = donationAmount,
-                                    MessageEntry = $"<c6>Ваши {donationAmount} гемов, спасибо за поддержку сервера!</c>"
+                                    MessageEntry = messageEntry
                                 };
+
                                 targetAccountGems.Home.NotificationFactory.Add(nGems);
+
                                 LogicAddNotificationCommand acmGems = new()
                                 {
                                     Notification = nGems
                                 };
-                                AvailableServerCommandMessage asmGems = new AvailableServerCommandMessage();
-                                asmGems.Command = acmGems;
+
+                                AvailableServerCommandMessage asmGems = new AvailableServerCommandMessage
+                                {
+                                    Command = acmGems
+                                };
+
                                 if (Sessions.IsSessionActive(qwidGems))
                                 {
                                     var sessionGems = Sessions.GetSession(qwidGems);
                                     sessionGems.GameListener.SendTCPMessage(asmGems);
                                 }
+
                                 // Выводим сообщение о количестве выданных гемов
-                                    response.Entry.Message = $"Выдано {donationAmount} гемов игроку с тегом {cmd[1]}";
-                                    Connection.Send(response);
+                                response.Entry.Message = $"Выдано {donationAmount} гемов игроку с тегом {cmd[1]} (тип сообщения: {messageType})";
+                                Connection.Send(response);
                                 break;
 
-                            case "ban":
+
+                    case "ban":
                                         if (HomeMode.Avatar.AccountId != 2 && HomeMode.Avatar.AccountId != 1)
                                         {
                                             response.Entry.Message = $"You don\'t have right to use this command"; // /usecode [code] - use bonus code
