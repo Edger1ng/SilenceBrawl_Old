@@ -80,15 +80,15 @@ namespace Supercell.Laser.Server.Message
         public string GetPingIconByMs(int ms)
         {
             string str = "▂   ";
-            if (ms <= 75)
+            if (ms <= 100)
             {
                 str = "▂▄▆█";
             }
-            else if (ms <= 125)
+            else if (ms <= 150)
             {
                 str = "▂▄▆ ";
             }
-            else if (ms <= 300)
+            else if (ms <= 450)
             {
                 str = "▂▄  ";
             }
@@ -105,7 +105,7 @@ namespace Supercell.Laser.Server.Message
             
             LobbyInfoMessage b = new()
             {
-                LobbyData = $"SilenceBrawl\nTG: @silencebrawl \n1.3.0\n{abd}Players Online: {Sessions.Count}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                LobbyData = $"SilenceBrawl\nTG: @silencebrawl \n1.3.1\n{abd}Players Online: {Sessions.Count}\nДата: {DateTime.UtcNow}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
                 PlayersCount = 0
             };
             Connection.Send(b);
@@ -295,7 +295,7 @@ namespace Supercell.Laser.Server.Message
                     break;
 
 
-                    Logger.Print($"[MessageManager::ReceiveMessage] Message received! PacketName: {message.GetType().Name}, PacketID: {message.GetMessageType()}");
+                    //Logger.Print($"[MessageManager::ReceiveMessage] Message received! PacketName: {message.GetType().Name}, PacketID: {message.GetMessageType()}");
 
                 default:
                     Logger.Print($"MessageManager::ReceiveMessage - no case for {message.GetType().Name} ({message.GetMessageType()})");
