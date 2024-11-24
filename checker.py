@@ -23,12 +23,34 @@ dp = Dispatcher(bot)
 # Переменная для хранения последнего хэша коммита
 last_commit_sha = None
 
+async def get_branch_for_commit(commit_sha):
+    """
+    Получить имя ветки для коммита.
+    """
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    branches_url = f"{GITHUB_API_URL.format(owner=OWNER, repo=REPO)}/branches"
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(branches_url, headers=headers) as response:
+            if response.status != 200:
+                logger.error(f"Error fetching branches: {response.status}")
+                return None
+            
+            branches = await response.json()
+            for branch in branches:
+                branch_name = branch['name']
+                branch_commit_sha = branch['commit']['sha']
+                if commit_sha == branch_commit_sha:
+                    return branch_name
+    return "Unknown branch"
+
 async def check_github_updates():
     global last_commit_sha
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    commits_url = f"{GITHUB_API_URL.format(owner=OWNER, repo=REPO)}/commits"
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(GITHUB_API_URL.format(owner=OWNER, repo=REPO), headers=headers) as response:
+        async with session.get(commits_url, headers=headers) as response:
             if response.status != 200:
                 logger.error(f"GitHub API Error: {response.status}")
                 return
@@ -44,13 +66,14 @@ async def check_github_updates():
             commit_author = latest_commit['commit']['author']['name']
             commit_date = latest_commit['commit']['author']['date']
 
-            # Если новый коммит
             if latest_sha != last_commit_sha:
                 last_commit_sha = latest_sha
+                branch_name = await get_branch_for_commit(latest_sha)
                 message = (
                     f"💡 *Новое изменение в репозитории {REPO}!*\n\n"
                     f"🖋 *Сообщение:* {commit_message}\n"
-                    f"👤 *Author:* Edger1ng\n"
+                    f"🌿 *Ветка:* {branch_name}\n"
+                    f"👤 *Автор:* Edger1ng\n"
                     f"🕒 *Дата:* {commit_date}\n\n"
                     f"🔗 [View Commit(только доверенные люди)](https://github.com/{OWNER}/{REPO}/commit/{latest_sha})"
                 )
