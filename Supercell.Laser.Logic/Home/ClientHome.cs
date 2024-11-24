@@ -441,7 +441,7 @@ namespace Supercell.Laser.Logic.Home
             GenerateOffer(
                 new DateTime(2024, 11, 18, 0, 0, 0), new DateTime(2024, 11, 30, 10, 0, 0),
                 6, 38, 135, ShopItem.GuaranteedHero,
-                23750, 35000, 3,
+                20000, 35000, 3,
                 "starpoints_exclusive", "Вольт!", "offer_xmas"
             );
 
