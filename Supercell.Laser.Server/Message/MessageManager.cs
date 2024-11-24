@@ -105,7 +105,7 @@ namespace Supercell.Laser.Server.Message
             
             LobbyInfoMessage b = new()
             {
-                LobbyData = $"SilenceBrawl\nTG: @silencebrawl \n1.3.1\n{abd}Players Online: {Sessions.Count}\nДата: {DateTime.UtcNow}.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                LobbyData = $"SilenceBrawl\nTG: @silencebrawl \n1.3.1\n{abd}Players Online: {Sessions.Count}\nДата: {DateTime.UtcNow}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
                 PlayersCount = 0
             };
             Connection.Send(b);
