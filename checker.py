@@ -3,7 +3,7 @@ import asyncio
 import aiohttp
 from aiogram import Bot, Dispatcher, executor, types
 
-# Конфигурация
+# Конфигурации
 GITHUB_API_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
 GITHUB_TOKEN = "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"
 TELEGRAM_TOKEN = "8116511420:AAFovL61Zr9XJDitR8_07NpT2o16XXGr5tI"
