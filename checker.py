@@ -62,7 +62,7 @@ async def periodic_task():
             await check_github_updates()
         except Exception as e:
             logger.error(f"Error in periodic_task: {e}")
-        await asyncio.sleep(300)  # 5 минут
+        await asyncio.sleep(30)  # 5 минут
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
