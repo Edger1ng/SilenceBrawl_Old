@@ -4237,13 +4237,27 @@ namespace Supercell.Laser.Server.Message
                         case 1:
                             if (location.GameMode == "BountyHunter" || location.GameMode == "CoinRush" || location.GameMode == "AttackDefend" || location.GameMode == "LaserBall" || location.GameMode == "RoboWars" || location.GameMode == "KingOfHill")
                             {
-                                underdogTrophiesResult += 15;
-                                trophiesResult += 12;
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             else if (location.GameMode == "BattleRoyale" || location.GameMode == "BattleRoyaleTeam")
                             {
-                                underdogTrophiesResult += 15;
-                                trophiesResult += 12;
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             break;
 
@@ -4251,25 +4265,53 @@ namespace Supercell.Laser.Server.Message
                         case 3:
                             if (location.GameMode == "BountyHunter" || location.GameMode == "CoinRush" || location.GameMode == "AttackDefend" || location.GameMode == "LaserBall" || location.GameMode == "RoboWars" || location.GameMode == "KingOfHill")
                             {
-                                underdogTrophiesResult += 12;
-                                trophiesResult += 12;
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             else if (location.GameMode == "BattleRoyale" || location.GameMode == "BattleRoyaleTeam")
                             {
-                                underdogTrophiesResult += 12;
-                                trophiesResult += 12;
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             break;
                         case 2:
                             if (location.GameMode == "BountyHunter" || location.GameMode == "CoinRush" || location.GameMode == "AttackDefend" || location.GameMode == "LaserBall" || location.GameMode == "RoboWars" || location.GameMode == "KingOfHill")
                             {
-                                underdogTrophiesResult += (int)(Math.Floor((double)Trophies[0] / 2) + (Math.Round((double)Trophies[0] + 3)));
-                                trophiesResult += (int)(Math.Floor((double)Trophies[0] / 2) + (Math.Round((double)Trophies[0] + 3)));
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             else if (location.GameMode == "BattleRoyale" || location.GameMode == "BattleRoyaleTeam")
                             {
-                                underdogTrophiesResult += (int)(Math.Floor((double)Math.Abs(Trophies[message.Rank - 1]) / 2) + (Math.Round((double)Math.Abs(Trophies[message.Rank - 1]) + 3)));
-                                trophiesResult += (int)(Math.Floor((double)Math.Abs(Trophies[message.Rank - 1]) / 2) + (Math.Round((double)Math.Abs(Trophies[message.Rank - 1]) + 3)));
+                                if (trophiesResult == -4)
+                                {
+                                    Console.WriteLine("-4");
+                                }
+                                else
+                                {
+                                    underdogTrophiesResult += 15;
+                                    trophiesResult += 15;
+                                }
                             }
                             break;
                     }
